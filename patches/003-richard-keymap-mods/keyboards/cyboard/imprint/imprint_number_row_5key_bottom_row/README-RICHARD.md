@@ -5,7 +5,7 @@ This keymap implements Colemak-DH layout with home row mods optimized for typing
 ## Build Command
 
 ```bash
-make cyboard/imprint/imprint_number_row_full_bottom_row:default
+make cyboard/imprint/imprint_number_row_5key_bottom_row:default
 ```
 
 ## Flashing

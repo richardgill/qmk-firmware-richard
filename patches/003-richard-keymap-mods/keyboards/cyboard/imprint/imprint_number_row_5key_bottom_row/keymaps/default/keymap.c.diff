@@ -1,7 +1,7 @@
-diff --git a/keyboards/cyboard/imprint/imprint_number_row_full_bottom_row/keymaps/default/keymap.c b/keyboards/cyboard/imprint/imprint_number_row_full_bottom_row/keymaps/default/keymap.c
+diff --git a/keyboards/cyboard/imprint/imprint_number_row_5key_bottom_row/keymaps/default/keymap.c b/keyboards/cyboard/imprint/imprint_number_row_5key_bottom_row/keymaps/default/keymap.c
 index 9f0cfc207e..e49a9ed670 100644
---- a/keyboards/cyboard/imprint/imprint_number_row_full_bottom_row/keymaps/default/keymap.c
-+++ b/keyboards/cyboard/imprint/imprint_number_row_full_bottom_row/keymaps/default/keymap.c
+--- a/keyboards/cyboard/imprint/imprint_number_row_5key_bottom_row/keymaps/default/keymap.c
++++ b/keyboards/cyboard/imprint/imprint_number_row_5key_bottom_row/keymaps/default/keymap.c
 @@ -4,95 +4,461 @@
  
  #include QMK_KEYBOARD_H

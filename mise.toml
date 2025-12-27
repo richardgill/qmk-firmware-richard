@@ -6,7 +6,7 @@
 run = """
 patchy repo reset --yes && patchy apply --all && \
 cd "$(jq -r '.clones_dir + .target_repo' patchy.json)" && \
-make cyboard/imprint/imprint_number_row_full_bottom_row:default
+make cyboard/imprint/imprint_number_row_5key_bottom_row:default
 """
 description = "Reset, apply patches, build firmware"
 
@@ -15,7 +15,7 @@ run = """
 patchy repo reset --yes && patchy apply --all && \
 qmk_dir="$(pwd)/$(jq -r '.clones_dir + .target_repo' patchy.json)" && \
 docker run --rm -v "$qmk_dir:/qmk_firmware" -w /qmk_firmware ghcr.io/qmk/qmk_cli \
-make cyboard/imprint/imprint_number_row_full_bottom_row:default
+make cyboard/imprint/imprint_number_row_5key_bottom_row:default
 """
 description = "Reset, apply patches, build via Docker"
 

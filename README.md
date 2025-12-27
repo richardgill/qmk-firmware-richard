@@ -24,7 +24,7 @@ mise run build      # Reset, apply patches, build firmware
 mise run generate   # Capture changes from clones/ as patches
 ```
 
-Output: `clones/qmk_firmware/cyboard_imprint_imprint_number_row_full_bottom_row_default.uf2`
+Output: `clones/qmk_firmware/cyboard_imprint_imprint_number_row_5key_bottom_row_default.uf2`
 
 ## Flashing
 

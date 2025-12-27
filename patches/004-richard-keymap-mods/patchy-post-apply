@@ -1,4 +1,0 @@
-#!/usr/bin/env bash
-set -euo pipefail
-
-make cyboard/imprint/imprint_number_row_full_bottom_row:default
