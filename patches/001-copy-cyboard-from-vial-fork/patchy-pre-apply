@@ -1,0 +1,24 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+REPO="Cyboard-DigitalTailor/vial-qmk"
+BRANCH="cyboard"
+TARGET_DIR="keyboards/cyboard"
+
+echo "Downloading cyboard keyboards from $REPO@$BRANCH..."
+
+temp_dir=$(mktemp -d)
+trap 'rm -rf "$temp_dir"' EXIT
+
+curl -sL "https://github.com/$REPO/archive/refs/heads/$BRANCH.tar.gz" | \
+    tar -xz -C "$temp_dir" --strip-components=1
+
+if [[ -d "$temp_dir/$TARGET_DIR" ]]; then
+    mkdir -p "$(dirname "$TARGET_DIR")"
+    rm -rf "$TARGET_DIR"
+    cp -r "$temp_dir/$TARGET_DIR" "$TARGET_DIR"
+    echo "Copied $TARGET_DIR successfully"
+else
+    echo "Error: $TARGET_DIR not found in archive" >&2
+    exit 1
+fi
