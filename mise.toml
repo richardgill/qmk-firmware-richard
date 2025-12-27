@@ -1,11 +1,11 @@
 [tools]
-"npm:patchy-cli" = "0.0.17"
+"npm:patchy-cli" = "0.0.19"
 "pipx:qmk" = "1.1.8"
 
 [tasks.build]
 run = """
 patchy repo reset --yes && patchy apply --all && \
-cd "$(jq -r '.clones_dir + .target_repo' patchy.json)" && \
+cd "$(patchy config get target_repo_path)" && \
 make cyboard/imprint/imprint_number_row_5key_bottom_row:default
 """
 description = "Reset, apply patches, build firmware"
@@ -13,7 +13,7 @@ description = "Reset, apply patches, build firmware"
 [tasks.build-docker]
 run = """
 patchy repo reset --yes && patchy apply --all && \
-qmk_dir="$(pwd)/$(jq -r '.clones_dir + .target_repo' patchy.json)" && \
+qmk_dir="$(patchy config get target_repo_path)" && \
 docker run --rm -v "$qmk_dir:/qmk_firmware" -w /qmk_firmware ghcr.io/qmk/qmk_cli \
 make cyboard/imprint/imprint_number_row_5key_bottom_row:default
 """

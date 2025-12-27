@@ -1,20 +1,14 @@
-# Patchy Workflow
+## Patchy
 
-For full patchy CLI documentation, see: https://github.com/richardgill/patchy/blob/main/README.md
+This project uses `patchy` to maintain patches against an upstream repo.
 
-This repo maintains patches on top of an upstream template. Patches in `patches/` are numbered directories applied in order.
+- Config: `./patchy.json` (jsonc)
+- Patches: `./patches/`
+- Cloned repo: `./clones/qmk_firmware/`
 
-## Patch File Types
-- `*.diff` - modifies existing files (unified diff format)
-- Regular files - added as new files
+Key commands:
+- `patchy generate` - Generate patches from changes in the cloned repo
+- `patchy apply` - Apply all patches to the cloned repo
+- `patchy repo reset` - Reset cloned repo to base revision (discard all changes)
 
-## Commands
-```bash
-patchy repo reset && patchy apply   # Reset and apply all patches (use to verify changes)
-patchy apply --until 004-github-actions  # Apply up to a specific patchset
-patchy apply --all # Commit all
-```
-
-## Editing .diff Files
-Hunk headers must have correct line counts: `@@ -old_start,old_count +new_start,new_count @@`
-If you add/remove lines from a diff, update the counts in the hunk header.
+Make changes in `./clones/qmk_firmware/`, then run `patchy generate` to update patches.
