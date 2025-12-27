@@ -3,7 +3,7 @@
   "source_repo": "https://github.com/qmk/qmk_firmware.git",
   "clones_dir": "./clones/",
   "patches_dir": "./patches/",
-  "base_revision": "0.31.3",
+  "base_revision": "0.29.11",
   "upstream_branch": "master",
   "target_repo": "qmk_firmware"
 }
