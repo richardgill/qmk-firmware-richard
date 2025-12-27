@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+echo "VIAL-specific options removed from cyboard/config.h"

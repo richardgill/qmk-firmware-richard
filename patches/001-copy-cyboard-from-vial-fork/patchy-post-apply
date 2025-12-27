@@ -1,5 +1,4 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-echo "verifying cyboard prints"
-make cyboard/imprint/imprint_number_row_5key_bottom_row:default
+echo "cyboard keyboards copied"

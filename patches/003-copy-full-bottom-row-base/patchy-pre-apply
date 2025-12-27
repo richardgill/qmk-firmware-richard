@@ -1,0 +1,22 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+SRC="keyboards/cyboard/imprint/imprint_number_row_5key_bottom_row"
+DST="keyboards/cyboard/imprint/imprint_number_row_full_bottom_row"
+
+echo "Copying $SRC to $DST..."
+cp -r "$SRC" "$DST"
+
+echo "Creating default keymap from vial keymap..."
+cp -r "$DST/keymaps/vial" "$DST/keymaps/default"
+
+echo "Removing VIAL-specific options from default keymap..."
+# Remove VIAL_ENABLE, VIA_ENABLE and other vial-specific rules
+sed -i '/VIAL_ENABLE/d' "$DST/keymaps/default/rules.mk"
+sed -i '/VIA_ENABLE/d' "$DST/keymaps/default/rules.mk"
+sed -i '/QMK_SETTINGS/d' "$DST/keymaps/default/rules.mk"
+sed -i '/TAP_DANCE_ENABLE/d' "$DST/keymaps/default/rules.mk"
+sed -i '/COMBO_ENABLE/d' "$DST/keymaps/default/rules.mk"
+sed -i '/KEY_OVERRIDE_ENABLE/d' "$DST/keymaps/default/rules.mk"
+
+echo "Created base keyboard: $DST"
