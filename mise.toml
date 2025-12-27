@@ -1,2 +1,15 @@
 [tools]
 "npm:patchy-cli" = "0.0.17"
+"pipx:qmk" = "1.1.8"
+
+[tasks.build]
+run = """
+patchy repo reset --yes && patchy apply --all && \
+cd "$(jq -r '.clones_dir + .target_repo' patchy.json)" && \
+make cyboard/imprint/imprint_number_row_full_bottom_row:default
+"""
+description = "Reset, apply patches, build firmware"
+
+[tasks.generate]
+run = "patchy generate"
+description = "Generate diffs from current repo state"
