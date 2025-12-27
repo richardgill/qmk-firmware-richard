@@ -10,6 +10,15 @@ make cyboard/imprint/imprint_number_row_full_bottom_row:default
 """
 description = "Reset, apply patches, build firmware"
 
+[tasks.build-docker]
+run = """
+patchy repo reset --yes && patchy apply --all && \
+qmk_dir="$(pwd)/$(jq -r '.clones_dir + .target_repo' patchy.json)" && \
+docker run --rm -v "$qmk_dir:/qmk_firmware" -w /qmk_firmware ghcr.io/qmk/qmk_cli \
+make cyboard/imprint/imprint_number_row_full_bottom_row:default
+"""
+description = "Reset, apply patches, build via Docker"
+
 [tasks.generate]
 run = "patchy generate"
 description = "Generate diffs from current repo state"
