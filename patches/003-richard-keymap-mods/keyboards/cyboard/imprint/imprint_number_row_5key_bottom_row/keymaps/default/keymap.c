@@ -438,11 +438,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 /*     } */
 /* } */
 
-static bool is_home_mod_key(uint16_t keycode) {
-    return keycode == HOME_A || keycode == HOME_R || keycode == HOME_S || keycode == HOME_T ||
-           keycode == HOME_N || keycode == HOME_E || keycode == HOME_I || keycode == HOME_O;
-}
-
 bool get_chordal_hold(uint16_t tap_hold_keycode, keyrecord_t* tap_hold_record,
                       uint16_t other_keycode, keyrecord_t* other_record) {
     if (tap_hold_keycode == BSPC_NAV) {
