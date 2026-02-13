@@ -477,8 +477,8 @@ static report_mouse_t rotate(report_mouse_t report, int16_t angle_degrees) {
 }
 
 report_mouse_t pointing_device_task_combined_user(report_mouse_t left_report, report_mouse_t right_report) {
-    left_report = rotate(left_report, 30);
-    right_report = rotate(right_report, -30);
+    left_report = rotate(left_report, 45);
+    right_report = rotate(right_report, -45);
     return pointing_device_combine_reports(left_report, right_report);
 }
 
