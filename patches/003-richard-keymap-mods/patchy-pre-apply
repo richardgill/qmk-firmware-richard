@@ -4,6 +4,7 @@ set -euo pipefail
 DST="keyboards/cyboard/imprint/imprint_number_row_5key_bottom_row"
 
 echo "Creating default keymap from vial keymap..."
+rm -rf "$DST/keymaps/default"
 cp -r "$DST/keymaps/vial" "$DST/keymaps/default"
 
 echo "Removing VIAL-specific options from default keymap..."
