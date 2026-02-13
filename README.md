@@ -20,8 +20,10 @@ Custom QMK firmware patches for Cyboard Imprint keyboard with Colemak-DH and hom
 ## Usage
 
 ```bash
-mise run build      # Reset, apply patches, build firmware
-mise run generate   # Capture changes from clones/ as patches
+mise run build        # Reset, apply patches, build firmware
+mise run flash        # Flash existing UF2 (waits for bootloader drive)
+mise run build-flash  # Reset, apply patches, build, and flash
+mise run generate     # Capture changes from clones/ as patches
 ```
 
 Output: `clones/qmk_firmware/cyboard_imprint_imprint_number_row_5key_bottom_row_default.uf2`
@@ -29,7 +31,7 @@ Output: `clones/qmk_firmware/cyboard_imprint_imprint_number_row_5key_bottom_row_
 ## Flashing
 
 1. Tap reset button 2x with pen
-2. Drag `.uf2` file to USB storage device
+2. Run `mise run flash` (or `mise run build-flash` to rebuild first)
 
 ## Workflow
 

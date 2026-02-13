@@ -22,3 +22,12 @@ description = "Reset, apply patches, build via Docker"
 [tasks.generate]
 run = "patchy generate"
 description = "Generate diffs from current repo state"
+
+[tasks.flash]
+wait_for = ["build"]
+run = "cd \"$(patchy config get target_repo_path)\" && ./util/uf2conv.py --wait --deploy cyboard_imprint_imprint_number_row_5key_bottom_row_default.uf2"
+description = "Flash the existing UF2 (waits for keyboard bootloader drive)"
+
+[tasks.build-flash]
+depends = ["build", "flash"]
+description = "Reset, apply patches, build, and flash firmware"
