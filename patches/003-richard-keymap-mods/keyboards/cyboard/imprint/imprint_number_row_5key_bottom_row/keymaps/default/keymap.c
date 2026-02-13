@@ -453,10 +453,6 @@ bool get_chordal_hold(uint16_t tap_hold_keycode, keyrecord_t* tap_hold_record,
         return true;
     }
 
-    if ((other_keycode == DEL_NUM || other_keycode == BSPC_NAV) && is_home_mod_key(tap_hold_keycode)) {
-        return true;
-    }
-
     return get_chordal_hold_default(tap_hold_record, other_record);  // Use default opposite-hands rule for everything else
 }
 
