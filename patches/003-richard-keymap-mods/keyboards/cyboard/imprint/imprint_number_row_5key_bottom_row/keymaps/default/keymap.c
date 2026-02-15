@@ -3,7 +3,6 @@
  */
 
 #include QMK_KEYBOARD_H
-#include <math.h>
 
 // Use LT (layer-tap) for home row mods, which handles the layer switching
 // We'll add the modifier functionality in process_record_user
@@ -451,25 +450,7 @@ bool get_chordal_hold(uint16_t tap_hold_keycode, keyrecord_t* tap_hold_record,
     return get_chordal_hold_default(tap_hold_record, other_record);  // Use default opposite-hands rule for everything else
 }
 
-static report_mouse_t rotate(report_mouse_t report, int16_t angle_degrees) {
-    const float radians = -(float)angle_degrees * 0.01745329252f;
-    const float sin_a = sinf(radians);
-    const float cos_a = cosf(radians);
-
-    const float x = (float)report.x;
-    const float y = (float)report.y;
-
-    const int32_t rotated_x = (int32_t)(cos_a * x - sin_a * y);
-    const int32_t rotated_y = (int32_t)(sin_a * x + cos_a * y);
-
-    report.x = CONSTRAIN_HID_XY(rotated_x);
-    report.y = CONSTRAIN_HID_XY(rotated_y);
-    return report;
-}
-
 report_mouse_t pointing_device_task_combined_user(report_mouse_t left_report, report_mouse_t right_report) {
-    left_report = rotate(left_report, 45);
-    right_report = rotate(right_report, -45);
     return pointing_device_combine_reports(left_report, right_report);
 }
 
