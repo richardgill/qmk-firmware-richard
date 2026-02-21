@@ -18,6 +18,8 @@
 
 #define UNICODE_SELECTED_MODES UNICODE_MODE_MACOS, UNICODE_MODE_LINUX
 
+#define TRACKBALLS_ENABLED 0
+
 // Trackball sensitivity settings
 #define CHARYBDIS_MINIMUM_DEFAULT_DPI 400  // Increase base DPI from 400 to 600
 #define CHARYBDIS_DEFAULT_DPI_CONFIG_STEP 200  // Each step adds 200 DPI

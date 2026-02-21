@@ -4,6 +4,10 @@
 
 #include QMK_KEYBOARD_H
 
+#ifndef TRACKBALLS_ENABLED
+#define TRACKBALLS_ENABLED 1
+#endif
+
 // Use LT (layer-tap) for home row mods, which handles the layer switching
 // We'll add the modifier functionality in process_record_user
 #define HOME_A LT(LEFT_MODS_HELD, KC_A)
@@ -317,11 +321,12 @@ uint16_t get_quick_tap_term(uint16_t keycode, keyrecord_t *record) {
 // Initialize pointing device with auto mouse feature
 void pointing_device_init_user(void) {
     set_auto_mouse_layer(MOUSE);
-    set_auto_mouse_enable(true);
+    set_auto_mouse_enable(TRACKBALLS_ENABLED);
 }
 
 // Initialize keyboard - enable left dragscroll on startup
 void keyboard_post_init_user(void) {
+#if TRACKBALLS_ENABLED
     charybdis_set_pointer_dragscroll_enabled(true, true);
 
     // Set different DPI for left and right trackballs
@@ -329,6 +334,7 @@ void keyboard_post_init_user(void) {
 
     charybdis_cycle_pointer_default_dpi(true, false); // Right up once
     charybdis_cycle_pointer_default_dpi(true, false); // Right up again
+#endif
 
 #ifdef RGB_MATRIX_ENABLE
     rgb_matrix_disable();  // Turn off RGB lighting on startup
@@ -451,6 +457,10 @@ bool get_chordal_hold(uint16_t tap_hold_keycode, keyrecord_t* tap_hold_record,
 }
 
 report_mouse_t pointing_device_task_combined_user(report_mouse_t left_report, report_mouse_t right_report) {
+    if (!TRACKBALLS_ENABLED) {
+        return (report_mouse_t){0};
+    }
+
     return pointing_device_combine_reports(left_report, right_report);
 }
 
