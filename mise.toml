@@ -25,9 +25,61 @@ description = "Generate diffs from current repo state"
 
 [tasks.flash]
 wait_for = ["build"]
-run = "cd \"$(patchy config get target_repo_path)\" && ./util/uf2conv.py --wait --deploy cyboard_imprint_imprint_number_row_5key_bottom_row_default.uf2"
-description = "Flash the existing UF2 (waits for keyboard bootloader drive)"
+run = """
+cd "$(patchy config get target_repo_path)" && \
+echo "Connect LEFT half in bootloader mode..." && \
+./util/uf2conv.py --wait --deploy cyboard_imprint_imprint_number_row_5key_bottom_row_default.uf2 && \
+echo "Connect RIGHT half in bootloader mode..." && \
+./util/uf2conv.py --wait --deploy cyboard_imprint_imprint_number_row_5key_bottom_row_default.uf2
+"""
+description = "Flash both halves with existing UF2 (left, then right)"
 
 [tasks.build-flash]
 depends = ["build", "flash"]
-description = "Reset, apply patches, build, and flash firmware"
+description = "Reset, apply patches, build, and flash both halves"
+
+[tasks.build-cosmos]
+run = """
+patchy repo reset --yes && patchy apply --auto-commit all && \
+cd "$(patchy config get target_repo_path)" && \
+make cosmos/lemon/pumpkin_patch:default
+"""
+description = "Reset, apply patches, and build Cosmos Lemon Pumpkin Patch firmware"
+
+[tasks.build-cosmos-raw]
+run = """
+patchy repo reset --yes && patchy apply --auto-commit all && \
+cd "$(patchy config get target_repo_path)" && \
+make cosmos/lemon/pumpkin_patch:raw_matrix_scan
+"""
+description = "Reset, apply patches, and build Cosmos raw matrix scan firmware"
+
+[tasks.flash-cosmos]
+wait_for = ["build-cosmos"]
+run = """
+cd "$(patchy config get target_repo_path)" && \
+echo "Connect LEFT half in bootloader mode..." && \
+qmk flash -kb cosmos/lemon/pumpkin_patch -km default -bl uf2-split-left && \
+echo "Connect RIGHT half in bootloader mode..." && \
+qmk flash -kb cosmos/lemon/pumpkin_patch -km default -bl uf2-split-right
+"""
+description = "Flash Cosmos Lemon both halves (left, then right)"
+
+[tasks.flash-cosmos-raw]
+wait_for = ["build-cosmos-raw"]
+run = """
+cd "$(patchy config get target_repo_path)" && \
+echo "Connect LEFT half in bootloader mode..." && \
+qmk flash -kb cosmos/lemon/pumpkin_patch -km raw_matrix_scan -bl uf2-split-left && \
+echo "Connect RIGHT half in bootloader mode..." && \
+qmk flash -kb cosmos/lemon/pumpkin_patch -km raw_matrix_scan -bl uf2-split-right
+"""
+description = "Flash Cosmos raw matrix scan firmware to both halves"
+
+[tasks.build-flash-cosmos]
+depends = ["build-cosmos", "flash-cosmos"]
+description = "Build and flash Cosmos Lemon both halves"
+
+[tasks.build-flash-cosmos-raw]
+depends = ["build-cosmos-raw", "flash-cosmos-raw"]
+description = "Build and flash Cosmos raw matrix scan firmware to both halves"
