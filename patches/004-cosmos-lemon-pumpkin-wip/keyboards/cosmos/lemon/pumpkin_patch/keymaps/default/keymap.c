@@ -48,6 +48,12 @@ const uint32_t PROGMEM unicode_map[] = {
     [WAVE]      = 0x1F44B,  // 👋
 };
 
+enum custom_keycodes {
+    SAFE_BOOT = SAFE_RANGE,
+};
+
+static uint32_t safe_boot_timer = 0;
+
 const char chordal_hold_layout[MATRIX_ROWS][MATRIX_COLS] PROGMEM =
     LAYOUT_num_full_bottom_row(
         'L', 'L', 'L', 'L', 'L', 'L',                     'R', 'R', 'R', 'R', 'R', 'R',
@@ -76,14 +82,14 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         KC_CAPS, HOME_A,  HOME_R,  HOME_S,  HOME_T,  KC_G,                      KC_M,    HOME_N,  HOME_E,  HOME_I,  HOME_O,  KC_CAPS,
         KC_NO,   KC_Z,    KC_X,    KC_C,    KC_D,    KC_V,                      KC_K,    KC_H,    KC_COMM, KC_DOT,  KC_NO,   KC_NO,
 
-        KC_NO,   KC_NO,   KC_NO,   KC_NO,   MO(EMOJI),
+        SAFE_BOOT, KC_NO,   KC_NO,   KC_NO,   MO(EMOJI),
 
         /* Top left thumb cluster  */
         ESC_SYS, KC_NO, MO(FKEY),
         /* Top right thumb cluster  */
         KC_NO, KC_NUBS, KC_ENTER,
         /* Bottom row right side */
-        KC_F23, KC_NO,   KC_NO,   KC_NO,  QK_BOOT,
+        KC_F23, KC_NO,   KC_NO,   KC_NO,  SAFE_BOOT,
         /* Bottom left thumb cluster row */
         BSPC_NAV, DEL_NUM, CW_TOGG,
         /* Bottom right thumb cluster row */
@@ -324,6 +330,19 @@ void keyboard_post_init_user(void) {
 // Process home row mods to add modifier functionality to layer-tap keys
 // LT() handles the layer switching, here we just add the modifiers
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
+    if (keycode == SAFE_BOOT) {
+        if (record->event.pressed) {
+            safe_boot_timer = timer_read32();
+            return false;
+        }
+
+        if (timer_elapsed32(safe_boot_timer) >= 1500) {
+            reset_keyboard();
+        }
+
+        return false;
+    }
+
     // Check if this is a home row mod being held (not tapped)
     // record->tap.count == 0 means it's being held
     if (!record->tap.count && record->event.pressed) {
