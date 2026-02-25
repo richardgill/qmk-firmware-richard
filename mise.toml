@@ -38,48 +38,54 @@ description = "Flash both halves with existing UF2 (left, then right)"
 depends = ["build", "flash"]
 description = "Reset, apply patches, build, and flash both halves"
 
-[tasks.build-cosmos]
-run = """
-patchy repo reset --yes && patchy apply --auto-commit all && \
-cd "$(patchy config get target_repo_path)" && \
-make cosmos/lemon/pumpkin_patch:default
-"""
-description = "Reset, apply patches, and build Cosmos Lemon Pumpkin Patch firmware"
+[tasks.build-cosmos-1]
+run = "bash ./scripts/cosmos-task.sh build 1 default"
+description = "Reset, apply patches, and build Cosmos custom_1 default firmware"
 
-[tasks.build-cosmos-raw]
-run = """
-patchy repo reset --yes && patchy apply --auto-commit all && \
-cd "$(patchy config get target_repo_path)" && \
-make cosmos/lemon/pumpkin_patch:raw_matrix_scan
-"""
-description = "Reset, apply patches, and build Cosmos raw matrix scan firmware"
+[tasks.build-cosmos-2]
+run = "bash ./scripts/cosmos-task.sh build 2 default"
+description = "Reset, apply patches, and build Cosmos custom_2 default firmware"
 
-[tasks.flash-cosmos]
-wait_for = ["build-cosmos"]
-run = """
-cd "$(patchy config get target_repo_path)" && \
-echo "Connect LEFT half in bootloader mode..." && \
-qmk flash -kb cosmos/lemon/pumpkin_patch -km default -bl uf2-split-left && \
-echo "Connect RIGHT half in bootloader mode..." && \
-qmk flash -kb cosmos/lemon/pumpkin_patch -km default -bl uf2-split-right
-"""
-description = "Flash Cosmos Lemon both halves (left, then right)"
+[tasks.build-cosmos-raw-1]
+run = "bash ./scripts/cosmos-task.sh build 1 raw_matrix_scan"
+description = "Reset, apply patches, and build Cosmos custom_1 raw matrix scan firmware"
 
-[tasks.flash-cosmos-raw]
-wait_for = ["build-cosmos-raw"]
-run = """
-cd "$(patchy config get target_repo_path)" && \
-echo "Connect LEFT half in bootloader mode..." && \
-qmk flash -kb cosmos/lemon/pumpkin_patch -km raw_matrix_scan -bl uf2-split-left && \
-echo "Connect RIGHT half in bootloader mode..." && \
-qmk flash -kb cosmos/lemon/pumpkin_patch -km raw_matrix_scan -bl uf2-split-right
-"""
-description = "Flash Cosmos raw matrix scan firmware to both halves"
+[tasks.build-cosmos-raw-2]
+run = "bash ./scripts/cosmos-task.sh build 2 raw_matrix_scan"
+description = "Reset, apply patches, and build Cosmos custom_2 raw matrix scan firmware"
 
-[tasks.build-flash-cosmos]
-depends = ["build-cosmos", "flash-cosmos"]
-description = "Build and flash Cosmos Lemon both halves"
+[tasks.flash-cosmos-1]
+wait_for = ["build-cosmos-1"]
+run = "bash ./scripts/cosmos-task.sh flash 1 default"
+description = "Flash Cosmos custom_1 both halves (left, then right)"
 
-[tasks.build-flash-cosmos-raw]
-depends = ["build-cosmos-raw", "flash-cosmos-raw"]
-description = "Build and flash Cosmos raw matrix scan firmware to both halves"
+[tasks.flash-cosmos-2]
+wait_for = ["build-cosmos-2"]
+run = "bash ./scripts/cosmos-task.sh flash 2 default"
+description = "Flash Cosmos custom_2 both halves (left, then right)"
+
+[tasks.flash-cosmos-raw-1]
+wait_for = ["build-cosmos-raw-1"]
+run = "bash ./scripts/cosmos-task.sh flash 1 raw_matrix_scan"
+description = "Flash Cosmos custom_1 raw matrix scan firmware to both halves"
+
+[tasks.flash-cosmos-raw-2]
+wait_for = ["build-cosmos-raw-2"]
+run = "bash ./scripts/cosmos-task.sh flash 2 raw_matrix_scan"
+description = "Flash Cosmos custom_2 raw matrix scan firmware to both halves"
+
+[tasks.build-flash-cosmos-1]
+depends = ["build-cosmos-1", "flash-cosmos-1"]
+description = "Build and flash Cosmos custom_1 both halves"
+
+[tasks.build-flash-cosmos-2]
+depends = ["build-cosmos-2", "flash-cosmos-2"]
+description = "Build and flash Cosmos custom_2 both halves"
+
+[tasks.build-flash-cosmos-raw-1]
+depends = ["build-cosmos-raw-1", "flash-cosmos-raw-1"]
+description = "Build and flash Cosmos custom_1 raw matrix scan firmware to both halves"
+
+[tasks.build-flash-cosmos-raw-2]
+depends = ["build-cosmos-raw-2", "flash-cosmos-raw-2"]
+description = "Build and flash Cosmos custom_2 raw matrix scan firmware to both halves"

@@ -1,9 +1,8 @@
-# Cosmos Lemon Pumpkin Patch
+# Cosmos Lemon custom-2
 
 ## Keymaps
 
 - `default`
-- `matrix_test`
 - `raw_matrix_scan`
 
 ## Safe boot keys (`default`)
@@ -17,7 +16,7 @@
 ## Build / flash
 
 ```bash
-qmk compile -kb cosmos/lemon/pumpkin_patch -km default
-qmk flash -kb cosmos/lemon/pumpkin_patch -km default -bl uf2-split-left
-qmk flash -kb cosmos/lemon/pumpkin_patch -km default -bl uf2-split-right
+qmk compile -kb cosmos/lemon/custom_2 -km default
+qmk flash -kb cosmos/lemon/custom_2 -km default -bl uf2-split-left
+qmk flash -kb cosmos/lemon/custom_2 -km default -bl uf2-split-right
 ```

@@ -1,4 +1,4 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-echo "cosmos lemon pumpkin wip files applied"
+echo "cosmos lemon custom_1/custom_2 wip files applied"
