@@ -41,14 +41,20 @@ enum layers {
 
 enum unicode_names {
     CHECKMARK,
+    FIRE,
+    GREEN_CIRCLE,
+    THREAD,
     THUMBS_UP,
     WAVE
 };
 
 const uint32_t PROGMEM unicode_map[] = {
-    [CHECKMARK] = 0x2705,   // ✅
-    [THUMBS_UP] = 0x1F44D,  // 👍
-    [WAVE]      = 0x1F44B,  // 👋
+    [CHECKMARK]    = 0x2705,   // ✅
+    [FIRE]         = 0x1F525,  // 🔥
+    [GREEN_CIRCLE] = 0x1F7E2,  // 🟢
+    [THREAD]       = 0x1F9F5,  // 🧵
+    [THUMBS_UP]    = 0x1F44D,  // 👍
+    [WAVE]         = 0x1F44B,  // 👋
 };
 
 const char chordal_hold_layout[MATRIX_ROWS][MATRIX_COLS] PROGMEM =
@@ -84,9 +90,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         /* Top left thumb cluster  */
         ESC_SYS, KC_NO, MO(FKEY),
         /* Top right thumb cluster  */
-        KC_NO, KC_NUBS, KC_ENTER,
+        KC_F23, KC_NUBS, KC_ENTER,
         /* Bottom row right side */
-        KC_F23, KC_NO,   KC_NO,   KC_NO,  KC_NO,
+        MO(EMOJI), KC_NO,   KC_NO,   KC_NO,  KC_NO,
         /* Bottom left thumb cluster row */
         BSPC_NAV, DEL_NUM, CW_TOGG,
         /* Bottom right thumb cluster row */
@@ -228,10 +234,10 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         KC_NO, KC_NO, KC_NO
     ),
     [EMOJI] = LAYOUT_num_full_bottom_row(
-        KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,                     KC_NO,    KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,
-        KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,                     KC_NO,    KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,
-        KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,                     UM(WAVE), KC_NO,   KC_NO,   KC_NO,   KC_NO,   UC_NEXT,
-        KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,                     KC_NO,    KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,
+        KC_NO,   KC_NO,   KC_NO,         KC_NO,       KC_NO,      KC_NO,         KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO,
+        KC_NO,   KC_NO,   UM(WAVE),      UM(FIRE),    KC_NO,      KC_NO,         KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO,
+        UC_NEXT, KC_NO,   KC_NO,         KC_NO,       UM(THREAD), UM(GREEN_CIRCLE), KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, UC_NEXT,
+        KC_NO,   KC_NO,   KC_NO,         UM(CHECKMARK), KC_NO,    KC_NO,         KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO,
 
         KC_NO, KC_NO, KC_NO, KC_NO, KC_NO,
 
@@ -240,7 +246,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         /* Top right thumb cluster  */
         KC_NO, KC_NO, KC_NO,
         /* Bottom row right side */
-        UM(CHECKMARK), KC_NO, KC_NO, KC_NO, KC_NO,
+        KC_NO, KC_NO, KC_NO, KC_NO, KC_NO,
         /* Bottom left thumb cluster row */
         KC_NO, KC_NO, KC_NO,
         /* Bottom right thumb cluster row */
