@@ -12,3 +12,8 @@ Key commands:
 - `patchy repo reset` - Reset cloned repo to base revision (discard all changes)
 
 Make changes in `./clones/qmk_firmware/`, then run `patchy generate` to update patches.
+
+## Flashing
+
+- Cyboard only needs firmware flashed to one half.
+- Cosmos needs firmware flashed to both halves.
